@@ -21,6 +21,10 @@ public class AZIMUTH extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
+  public void setWheelsToDegree(double degree) {
+
+  }
+
   @Override
   public void initDefaultCommand() {
 
