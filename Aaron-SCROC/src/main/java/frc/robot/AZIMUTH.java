@@ -22,7 +22,11 @@ public class AZIMUTH extends Subsystem {
   // here. Call these from Commands.
 
   public void setWheelsToDegree(double degree) {
+    double setTicks = convertDegreeToTicks(degree);
+  }
 
+  private double convertDegreeToTicks(double degreeValue) {
+    return 0.0;
   }
 
   @Override
