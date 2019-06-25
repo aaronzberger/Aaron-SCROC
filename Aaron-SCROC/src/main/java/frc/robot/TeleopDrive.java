@@ -12,8 +12,14 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class TeleopDrive extends Command {
 
-  public TeleopDrive(DriveTrain driveTrain) {
-    requires(Robot.azimuth);
+  private AZIMUTH azimuth;
+  private DriveTrain driveTrain;
+  private Joystick joystick;
+
+  public TeleopDrive(DriveTrain driveTrain, AZIMUTH azimuth) {
+    this.driveTrain = driveTrain;
+    this.azimuth = azimuth;
+    this.joystick = Robot.joystick;
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -26,26 +32,26 @@ public class TeleopDrive extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double xValue = Robot.joystick.getRawAxis(0);
-    double yValue = Robot.joystick.getRawAxis(1);
+    double xValue = joystick.getRawAxis(0);
+    double yValue = joystick.getRawAxis(1);
     double degreeValue = convertXYtoDegree(xValue, yValue);
     if(xValue != 0.0 && yValue != 0.0) {
-      Robot.azimuth.setWheelsToDegree(degreeValue);
+      azimuth.setWheelsToDegree(degreeValue);
     }
   }
 
   private double convertXYtoDegree(double xValue, double yValue) {
     if(xValue > 0 && yValue > 0) {
-      return (90 - Math.toDegrees(Math.atan(yValue/xValue)));
+      return (90 + Math.toDegrees(Math.atan(yValue/xValue)));
     }
     else if(xValue > 0 && yValue < 0) {
-      return (90 + Math.toDegrees(Math.atan(Math.abs(yValue)/(Math.abs(xValue)))));
+      return (90 - Math.toDegrees(Math.atan(Math.abs(yValue)/(Math.abs(xValue)))));
     }
     else if (xValue < 0 && yValue < 0) {
-      return (180 + Math.toDegrees(Math.atan(Math.abs(yValue)/(Math.abs(xValue)))));
+      return (Math.toDegrees(Math.atan(Math.abs(yValue)/(Math.abs(xValue)))));
     }
     else if (xValue < 0 && yValue > 0) {
-      return (270 + Math.toDegrees(Math.atan(Math.abs(yValue)/(Math.abs(xValue)))));
+      return (Math.toDegrees(Math.atan(Math.abs(yValue)/(Math.abs(xValue)))));
     }
     //should never run because it checks to make sure they are both not zero. (atan is only zero @ x=0)
     return 0.0;
