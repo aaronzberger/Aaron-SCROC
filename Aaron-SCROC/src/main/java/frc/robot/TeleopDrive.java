@@ -12,16 +12,8 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class TeleopDrive extends Command {
 
-  private Joystick joystick;
-  private AZIMUTH azimuth;
-  private DriveTrain driveTrain;
-
-  public TeleopDrive(DriveTrain driveTrain, AZIMUTH azimuth, Joystick joystick) {
-    requires(azimuth);
-    requires(driveTrain);
-    this.joystick = joystick;
-    this.azimuth = azimuth;
-    this.driveTrain = driveTrain;
+  public TeleopDrive(DriveTrain driveTrain) {
+    requires(Robot.azimuth);
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -34,11 +26,11 @@ public class TeleopDrive extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double xValue = joystick.getRawAxis(0);
-    double yValue = joystick.getRawAxis(1);
+    double xValue = Robot.joystick.getRawAxis(0);
+    double yValue = Robot.joystick.getRawAxis(1);
     double degreeValue = convertXYtoDegree(xValue, yValue);
     if(xValue != 0.0 && yValue != 0.0) {
-      azimuth.setWheelsToDegree(degreeValue);
+      Robot.azimuth.setWheelsToDegree(degreeValue);
     }
   }
 

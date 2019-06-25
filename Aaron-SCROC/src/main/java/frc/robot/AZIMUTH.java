@@ -7,6 +7,9 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -20,13 +23,24 @@ public class AZIMUTH extends Subsystem {
 
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
+  private TalonSRX johnny = new TalonSRX(1);
+
+  public AZIMUTH() {
+    johnny.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+    johnny.setSensorPhase(true);
+    johnny.config_kP(0, 1);
+    johnny.config_kI(0, 0);
+    johnny.config_kD(0, 6);
+    johnny.config_kF(0, 0);
+  }
 
   public void setWheelsToDegree(double degree) {
     double setTicks = convertDegreeToTicks(degree);
+    johnny.set(ControlMode.Position, setTicks);
   }
 
   private double convertDegreeToTicks(double degreeValue) {
-    return 0.0;
+    return (degreeValue * (1024/90));
   }
 
   @Override
