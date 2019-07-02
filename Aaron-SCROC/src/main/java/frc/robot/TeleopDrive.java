@@ -17,6 +17,8 @@ public class TeleopDrive extends Command {
   private Joystick joystick;
 
   public TeleopDrive(DriveTrain driveTrain, AZIMUTH azimuth) {
+    requires(azimuth);
+    requires(driveTrain);
     this.driveTrain = driveTrain;
     this.azimuth = azimuth;
     this.joystick = Robot.joystick;
@@ -37,25 +39,28 @@ public class TeleopDrive extends Command {
     double degreeValue = convertXYtoDegree(xValue, yValue);
     if(xValue != 0.0 && yValue != 0.0) {
       azimuth.setWheelsToDegree(degreeValue);
+      System.out.println(degreeValue);
     }
+
   }
 
   private double convertXYtoDegree(double xValue, double yValue) {
-    if(xValue > 0 && yValue > 0) {
-      return (90 + Math.toDegrees(Math.atan(yValue/xValue)));
+    double returnValue = 0;
+    if(xValue >= 0 && yValue >= 0) {
+      returnValue = (90 + Math.toDegrees(Math.atan(yValue/xValue)));
     }
     else if(xValue > 0 && yValue < 0) {
-      return (90 - Math.toDegrees(Math.atan(Math.abs(yValue)/(Math.abs(xValue)))));
+      returnValue = (90 - Math.toDegrees(Math.atan(Math.abs(yValue)/(Math.abs(xValue)))));
     }
-    else if (xValue < 0 && yValue < 0) {
-      return (Math.toDegrees(Math.atan(Math.abs(yValue)/(Math.abs(xValue)))));
+    else if (xValue <= 0 && yValue <= 0) {
+      returnValue = (270 + Math.toDegrees(Math.atan(Math.abs(yValue)/(Math.abs(xValue)))));
     }
     else if (xValue < 0 && yValue > 0) {
-      return (Math.toDegrees(Math.atan(Math.abs(yValue)/(Math.abs(xValue)))));
+      returnValue = (270 - Math.toDegrees(Math.atan(Math.abs(yValue)/(Math.abs(xValue)))));
     }
-    //should never run because it checks to make sure they are both not zero. (atan is only zero @ x=0)
-    return 0.0;
+    return returnValue;
   }
+    //should never run because it checks to make sure they are both not zero. (atan is only zero @ x=0)  }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
