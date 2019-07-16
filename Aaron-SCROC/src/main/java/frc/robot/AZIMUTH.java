@@ -23,24 +23,54 @@ public class AZIMUTH extends Subsystem {
 
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  private TalonSRX johnny = new TalonSRX(1);
+  private TalonSRX frontLeft = new TalonSRX(1);
+  private TalonSRX frontRight = new TalonSRX(2);
+  private TalonSRX backLeft = new TalonSRX(3);
+  private TalonSRX backRight = new TalonSRX(4);
 
   public AZIMUTH() {
-    johnny.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
-    johnny.setSensorPhase(true);
-    johnny.config_kP(0, 1);
-    johnny.config_kI(0, 0);
-    johnny.config_kD(0, 6);
-    johnny.config_kF(0, 0);
+    setupTalon(frontLeft);
+    setupTalon(frontRight);
+    setupTalon(backLeft);
+    setupTalon(backRight);
   }
 
-  public void setWheelsToDegree(double degree) {
-    double setTicks = convertDegreeToTicks(degree);
-    johnny.set(ControlMode.Position, setTicks);
+  public void setWheelsToDegree(double goal) {
+    setWheelToDegree(frontLeft, goal);
+    setWheelToDegree(frontRight, goal);
+    setWheelToDegree(backLeft, goal);
+    setWheelToDegree(backRight, goal);
+
   }
 
-  private double convertDegreeToTicks(double degreeValue) {
-    return (degreeValue * (1024/90));
+  private void setWheelToDegree(TalonSRX motor, double goalPosition) {
+    double currentRelativePosition = convertTicksToDegrees(motor.getSelectedSensorPosition());
+    double currentAbsolutePosition = ((currentRelativePosition % 360.0) + 360.0) % 360.0;
+    double goalMove = goalPosition - currentAbsolutePosition;
+    if(goalMove < -180) {
+      goalMove += 360;
+    }
+    if(goalMove > 180) {
+      goalMove -= 360;
+    }
+    motor.set(ControlMode.Position, convertDegreesToTicks(goalMove) + currentRelativePosition);
+  }
+
+  private double convertDegreesToTicks(double degreeValue) {
+    return (degreeValue * (1024.0/90.0));
+  }
+  private double convertTicksToDegrees(double ticks) {
+    return (ticks / (1024.0/90/0));
+  }
+
+  private void setupTalon(TalonSRX talon) {
+    talon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+    talon.setSensorPhase(true);
+    talon.config_kP(0, 1);
+    talon.config_kI(0, 0);
+    talon.config_kD(0, 6);
+    talon.config_kF(0, 0);
+    talon.setInverted(true);
   }
 
   @Override

@@ -39,9 +39,8 @@ public class TeleopDrive extends Command {
     double degreeValue = convertXYtoDegree(xValue, yValue);
     if(xValue != 0.0 && yValue != 0.0) {
       azimuth.setWheelsToDegree(degreeValue);
-      System.out.println(degreeValue);
+      System.out.println("Set all wheels to " + degreeValue);
     }
-
   }
 
   private double convertXYtoDegree(double xValue, double yValue) {
