@@ -29,11 +29,13 @@ public class TeleopDrive extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    driveTrain.stop();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    //FOR AZIMUTH DRIVING (talons, left stick)
     double xValue = joystick.getRawAxis(0);
     double yValue = joystick.getRawAxis(1);
     double degreeValue = convertXYtoDegree(xValue, yValue);
@@ -41,6 +43,22 @@ public class TeleopDrive extends Command {
       azimuth.setWheelsToDegree(degreeValue);
       System.out.println("Set all wheels to " + degreeValue);
     }
+
+    //FOR SIMPLE DRIVING (neos)
+    double speed = 0.75;
+    double rotation = 0.6;
+
+    speed *= joystick.getRawAxis(5);
+    rotation *= joystick.getRawAxis(4);
+
+    //or, for more curved control:
+    // speed *= Math.pow(joystick.getRawAxis(5), 3);
+    // rotation *= Math.pow(joystick.getRawAxis(4), 3);
+
+    if(speed > 0.9) { speed = 0.9; }
+    if(rotation > 0.9) { rotation = 0.9; }
+
+    driveTrain.arcadeDrive(speed, rotation);
   }
 
   private double convertXYtoDegree(double xValue, double yValue) {
