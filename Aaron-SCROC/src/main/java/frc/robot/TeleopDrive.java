@@ -36,8 +36,8 @@ public class TeleopDrive extends Command {
   @Override
   protected void execute() {
     //FOR AZIMUTH DRIVING (talons, left stick)
-    double xValue = joystick.getRawAxis(0);
-    double yValue = joystick.getRawAxis(1);
+    double xValue = joystick.getRawAxis(RobotMap.kLeftStickX);
+    double yValue = joystick.getRawAxis(RobotMap.kLeftStickY);
     double degreeValue = convertXYtoDegree(xValue, yValue);
     if(xValue != 0.0 && yValue != 0.0) {
       azimuth.setWheelsToDegree(degreeValue);
@@ -48,15 +48,15 @@ public class TeleopDrive extends Command {
     double speed = 0.75;
     double rotation = 0.6;
 
-    speed *= joystick.getRawAxis(5);
-    rotation *= joystick.getRawAxis(4);
+    speed *= joystick.getRawAxis(RobotMap.kRightStickY);
+    rotation *= joystick.getRawAxis(RobotMap.kRightStickX);
 
     //or, for more curved control:
     // speed *= Math.pow(joystick.getRawAxis(5), 3);
     // rotation *= Math.pow(joystick.getRawAxis(4), 3);
 
-    if(speed > 0.9) { speed = 0.9; }
-    if(rotation > 0.9) { rotation = 0.9; }
+    if(speed > RobotMap.MAX_SPEEDS) { speed = RobotMap.MAX_SPEEDS; }
+    if(rotation > RobotMap.MAX_SPEEDS) { rotation = RobotMap.MAX_SPEEDS; }
 
     driveTrain.arcadeDrive(speed, rotation);
   }

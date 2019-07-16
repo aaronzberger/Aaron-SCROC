@@ -31,10 +31,10 @@ public class DriveTrain extends Subsystem {
   // here. Call these from Commands.
 
   public DriveTrain() {
-    frontLeft = new CANSparkMax(5, MotorType.kBrushless);
-    frontRight = new CANSparkMax(6, MotorType.kBrushless);
-    backRight = new CANSparkMax(7, MotorType.kBrushless);
-    backLeft = new CANSparkMax(8, MotorType.kBrushless);
+    frontLeft = new CANSparkMax(RobotMap.DRIVE_FRONT_LEFT, MotorType.kBrushless);
+    frontRight = new CANSparkMax(RobotMap.DRIVE_FRONT_RIGHT, MotorType.kBrushless);
+    backLeft = new CANSparkMax(RobotMap.DRIVE_BACK_LEFT, MotorType.kBrushless);
+    backRight = new CANSparkMax(RobotMap.DRIVE_BACK_RIGHT, MotorType.kBrushless);
 
     leftMotors = new SpeedControllerGroup(frontLeft, backLeft);
     rightMotors = new SpeedControllerGroup(frontRight, backRight);

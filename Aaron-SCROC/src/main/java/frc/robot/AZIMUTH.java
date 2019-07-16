@@ -23,10 +23,10 @@ public class AZIMUTH extends Subsystem {
 
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  private TalonSRX frontLeft = new TalonSRX(1);
-  private TalonSRX frontRight = new TalonSRX(2);
-  private TalonSRX backLeft = new TalonSRX(3);
-  private TalonSRX backRight = new TalonSRX(4);
+  private TalonSRX frontLeft = new TalonSRX(RobotMap.AZ_FRONT_LEFT);
+  private TalonSRX frontRight = new TalonSRX(RobotMap.AZ_BACK_RIGHT);
+  private TalonSRX backLeft = new TalonSRX(RobotMap.AZ_BACK_LEFT);
+  private TalonSRX backRight = new TalonSRX(RobotMap.AZ_BACK_RIGHT);
 
   public AZIMUTH() {
     setupTalon(frontLeft);
