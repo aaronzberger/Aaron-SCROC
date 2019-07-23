@@ -33,7 +33,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    TeleopDrive teleopDrive = new TeleopDrive(driveTrain, azimuth);
+    TeleopDrive teleopDrive = new TeleopDrive();
     driveTrain.setDefaultCommand(teleopDrive);
     
     // m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
