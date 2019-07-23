@@ -16,11 +16,11 @@ public class TeleopDrive extends Command {
   private DriveTrain driveTrain;
   private Joystick joystick;
 
-  public TeleopDrive(DriveTrain driveTrain, AZIMUTH azimuth) {
+  public TeleopDrive() {
     requires(azimuth);
     requires(driveTrain);
-    this.driveTrain = driveTrain;
-    this.azimuth = azimuth;
+    this.driveTrain = Robot.driveTrain;
+    this.azimuth = Robot.azimuth;
     this.joystick = Robot.joystick;
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
@@ -41,6 +41,7 @@ public class TeleopDrive extends Command {
     double degreeValue = convertXYtoDegree(xValue, yValue);
     if(xValue != 0.0 && yValue != 0.0) {
       azimuth.setWheelsToDegree(degreeValue);
+      arcadeDrive(RobotMap.THROTTLE_SCALE, 0.0);
       System.out.println("Set all wheels to " + degreeValue);
     }
 
@@ -52,13 +53,18 @@ public class TeleopDrive extends Command {
     rotation *= joystick.getRawAxis(RobotMap.kRightStickX);
 
     //or, for more curved control:
-    // speed *= Math.pow(joystick.getRawAxis(5), 3);
-    // rotation *= Math.pow(joystick.getRawAxis(4), 3);
+    // speed *= Math.pow(joystick.getRawAxis(RobotMap.kRightStickY), 3);
+    // rotation *= Math.pow(joystick.getRawAxis(RobotMap.kRightStickX), 3);
 
     if(speed > RobotMap.MAX_SPEEDS) { speed = RobotMap.MAX_SPEEDS; }
     if(rotation > RobotMap.MAX_SPEEDS) { rotation = RobotMap.MAX_SPEEDS; }
 
-    driveTrain.arcadeDrive(speed, rotation);
+    arcadeDrive(speed, rotation);
+  }
+
+  //to ensure there is only one reference to arcadeDrive at one time.
+  private static void arcadeDrive(double speed, double rotation) {
+    Robot.driveTrain.arcadeDrive(speed, rotation);
   }
 
   private double convertXYtoDegree(double xValue, double yValue) {

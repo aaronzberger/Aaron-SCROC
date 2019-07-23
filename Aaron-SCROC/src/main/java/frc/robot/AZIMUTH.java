@@ -10,8 +10,6 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -19,10 +17,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * Add your docs here.
  */
 public class AZIMUTH extends Subsystem {
-  
 
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
   private TalonSRX frontLeft = new TalonSRX(RobotMap.AZ_FRONT_LEFT);
   private TalonSRX frontRight = new TalonSRX(RobotMap.AZ_BACK_RIGHT);
   private TalonSRX backLeft = new TalonSRX(RobotMap.AZ_BACK_LEFT);
@@ -40,7 +35,6 @@ public class AZIMUTH extends Subsystem {
     setWheelToDegree(frontRight, goal);
     setWheelToDegree(backLeft, goal);
     setWheelToDegree(backRight, goal);
-
   }
 
   private void setWheelToDegree(TalonSRX motor, double goalPosition) {
@@ -60,7 +54,7 @@ public class AZIMUTH extends Subsystem {
     return (degreeValue * (1024.0/90.0));
   }
   private double convertTicksToDegrees(double ticks) {
-    return (ticks / (1024.0/90/0));
+    return (ticks / (1024.0/90.0));
   }
 
   private void setupTalon(TalonSRX talon) {
