@@ -41,13 +41,34 @@ public class AZIMUTH extends Subsystem {
     double currentRelativePosition = convertTicksToDegrees(motor.getSelectedSensorPosition());
     double currentAbsolutePosition = ((currentRelativePosition % 360.0) + 360.0) % 360.0;
     double goalMove = goalPosition - currentAbsolutePosition;
-    if(goalMove < -180) {
-      goalMove += 360;
+    if(goalMove < -180.0) {
+      goalMove += 360.0;
     }
-    if(goalMove > 180) {
-      goalMove -= 360;
+    if(goalMove > 180.0) {
+      goalMove -= 360.0;
     }
     motor.set(ControlMode.Position, convertDegreesToTicks(goalMove) + currentRelativePosition);
+  }
+
+  private void setWheelToFieldDegree(TalonSRX motor, double goalPosition) {
+    double motorRelativePosition = convertTicksToDegrees(motor.getSelectedSensorPosition());
+    double motorAbsolutePosition = ((motorRelativePosition % 360.0) + 360.0) % 360.0;
+    double robotFieldPosition = gyro.getReading();
+    double motorFieldPosition;
+    if(robotFieldPosition < 180.0) {
+      motorFieldPosition = motorAbsolutePosition + robotFieldPosition;
+    }
+    if(motorFieldPosition > 360.0) {
+      motorFieldPosition -= 360;
+    }
+    double goalMove = goalPosition - motorFieldPosition;
+    if(goalMove < -180.0) {
+      goalMove += 360.0;
+    }
+    if(goalMove > 180.0) {
+      goalMove -= 360.0;
+    }
+    motor.set(ControlMode.Position, convertDegreesToTicks(goalMove) + motorRelativePosition);
   }
 
   private double convertDegreesToTicks(double degreeValue) {
