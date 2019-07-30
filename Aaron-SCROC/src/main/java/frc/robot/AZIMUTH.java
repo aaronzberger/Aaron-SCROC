@@ -58,13 +58,15 @@ public class AZIMUTH extends Subsystem {
   }
 
   private void setupTalon(TalonSRX talon) {
-    talon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+    talon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
     talon.setSensorPhase(true);
     talon.config_kP(0, 1);
     talon.config_kI(0, 0);
     talon.config_kD(0, 6);
     talon.config_kF(0, 0);
     talon.setInverted(true);
+    talon.set(ControlMode.Position, 0);
+    talon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
   }
 
   @Override
