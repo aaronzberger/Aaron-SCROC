@@ -46,8 +46,8 @@ public class TeleopDrive extends Command {
     }
 
     //FOR SIMPLE DRIVING (neos)
-    double speed = 0.75;
-    double rotation = 0.6;
+    double speed = RobotMap.THROTTLE_SCALE;
+    double rotation = RobotMap.STEERING_SCALE;
 
     speed *= joystick.getRawAxis(RobotMap.kRightStickY);
     rotation *= joystick.getRawAxis(RobotMap.kRightStickX);
