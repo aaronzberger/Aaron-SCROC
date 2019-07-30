@@ -15,6 +15,7 @@ public class TeleopDrive extends Command {
   private AZIMUTH azimuth;
   private DriveTrain driveTrain;
   private Joystick joystick;
+  public static boolean swerveMode = true;
 
   public TeleopDrive() {
     requires(azimuth);
@@ -35,16 +36,18 @@ public class TeleopDrive extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    //FOR AZIMUTH DRIVING (talons, left stick)
-    double xValue = joystick.getRawAxis(RobotMap.kLeftStickX);
-    double yValue = joystick.getRawAxis(RobotMap.kLeftStickY);
-    double degreeValue = convertXYtoDegree(xValue, yValue);
-    if(xValue != 0.0 && yValue != 0.0) {
-      azimuth.setWheelsToDegree(degreeValue);
-      arcadeDrive(RobotMap.THROTTLE_SCALE, 0.0);
-      System.out.println("Set all wheels to " + degreeValue);
+    if(swerveMode) {
+      //FOR AZIMUTH DRIVING (talons, left stick)
+      double xValue = joystick.getRawAxis(RobotMap.kLeftStickX);
+      double yValue = joystick.getRawAxis(RobotMap.kLeftStickY);
+      double degreeValue = convertXYtoDegree(xValue, yValue);
+      if(xValue != 0.0 && yValue != 0.0) {
+        azimuth.setWheelsToDegree(degreeValue);
+        arcadeDrive(RobotMap.THROTTLE_SCALE, 0.0);
+        System.out.println("Set all wheels to " + degreeValue);
+      }
     }
-
+    else {
     //FOR SIMPLE DRIVING (neos)
     double speed = RobotMap.THROTTLE_SCALE;
     double rotation = RobotMap.STEERING_SCALE;
@@ -60,6 +63,7 @@ public class TeleopDrive extends Command {
     if(rotation > RobotMap.MAX_SPEEDS) { rotation = RobotMap.MAX_SPEEDS; }
 
     arcadeDrive(speed, rotation);
+    }
   }
 
   //to ensure there is only one reference to arcadeDrive at one time.
