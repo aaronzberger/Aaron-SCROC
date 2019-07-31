@@ -69,6 +69,19 @@ public class AZIMUTH extends Subsystem {
     talon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
   }
 
+  public void setSpeed(int CANID, double speed) {
+    switch(CANID) {
+      case RobotMap.AZ_FRONT_LEFT:
+        frontLeft.set(ControlMode.PercentOutput, speed);
+      case RobotMap.AZ_FRONT_RIGHT:
+        frontRight.set(ControlMode.PercentOutput, speed);
+      case RobotMap.AZ_BACK_LEFT:
+        backLeft.set(ControlMode.PercentOutput, speed);
+      case RobotMap.AZ_BACK_RIGHT:
+        backRight.set(ControlMode.PercentOutput, speed);
+    }
+  }
+
   @Override
   public void initDefaultCommand() {
 

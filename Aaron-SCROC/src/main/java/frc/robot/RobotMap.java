@@ -26,6 +26,9 @@ public class RobotMap {
 	public static final double STEERING_SCALE = 0.6;
 	public static final double MAX_SPEEDS = 0.95;
 
+	public static final double TEST_AZ_SPEED = 0.5;
+	public static final double TEST_DRIVE_SPEED = 0.5;
+
 	//Logitech f310 Mappings
 	/* axis mappings */
 	public static final int kLeftStickX = 0;

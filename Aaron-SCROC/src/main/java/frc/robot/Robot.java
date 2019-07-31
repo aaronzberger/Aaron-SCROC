@@ -10,6 +10,23 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.TestDriveCommands.BackLeftDriveBackward;
+import frc.robot.TestDriveCommands.BackLeftDriveForward;
+import frc.robot.TestDriveCommands.BackRightDriveBackward;
+import frc.robot.TestDriveCommands.BackRightDriveForward;
+import frc.robot.TestDriveCommands.FrontLeftDriveBackward;
+import frc.robot.TestDriveCommands.FrontLeftDriveForward;
+import frc.robot.TestDriveCommands.FrontRightDriveBackward;
+import frc.robot.TestDriveCommands.FrontRightDriveForward;
+import frc.robot.TestSwerveCommands.BackLeftSwerveBackward;
+import frc.robot.TestSwerveCommands.BackLeftSwerveForward;
+import frc.robot.TestSwerveCommands.BackRightSwerveBackward;
+import frc.robot.TestSwerveCommands.BackRightSwerveForward;
+import frc.robot.TestSwerveCommands.FrontLeftSwerveBackward;
+import frc.robot.TestSwerveCommands.FrontLeftSwerveForward;
+import frc.robot.TestSwerveCommands.FrontRightSwerveBackward;
+import frc.robot.TestSwerveCommands.FrontRightSwerveForward;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -35,6 +52,24 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     TeleopDrive teleopDrive = new TeleopDrive();
     driveTrain.setDefaultCommand(teleopDrive);
+
+    SmartDashboard.putData("Back Left Swerve Forward", new BackLeftSwerveForward());
+    SmartDashboard.putData("Back Left Swerve Backward", new BackLeftSwerveBackward());
+    SmartDashboard.putData("Back Right Swerve Forward", new BackRightSwerveForward());
+    SmartDashboard.putData("Back Right Swerve Backward", new BackRightSwerveBackward());
+    SmartDashboard.putData("Front Left Swerve Forward", new FrontLeftSwerveForward());
+    SmartDashboard.putData("Front Left Swerve Backward", new FrontLeftSwerveBackward());
+    SmartDashboard.putData("Front Right Swerve Forward", new FrontRightSwerveForward());
+    SmartDashboard.putData("Front Right Swerve Backward", new FrontRightSwerveBackward());
+
+    SmartDashboard.putData("Back Left Drive Forward", new BackLeftDriveForward());
+    SmartDashboard.putData("Back Left Drive Backward", new BackLeftDriveBackward());
+    SmartDashboard.putData("Back Right Drive Forward", new BackRightDriveForward());
+    SmartDashboard.putData("Back Right Drive Backward", new BackRightDriveBackward());
+    SmartDashboard.putData("Front Left Drive Forward", new FrontLeftDriveForward());
+    SmartDashboard.putData("Front Left Drive Backward", new FrontLeftDriveBackward());
+    SmartDashboard.putData("Front Right Drive Forward", new FrontRightDriveForward());
+    SmartDashboard.putData("Front Right Drive Backward", new FrontRightDriveBackward());
     
     // m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     // m_chooser.addOption("My Auto", kCustomAuto);

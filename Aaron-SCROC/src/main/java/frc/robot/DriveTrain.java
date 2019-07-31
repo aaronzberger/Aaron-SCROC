@@ -50,6 +50,19 @@ public class DriveTrain extends Subsystem {
     differentialDrive.tankDrive(leftSpeed, rightSpeed);
   }
 
+  public void setSpeed(int CANID, double speed) {
+    switch(CANID) {
+      case RobotMap.DRIVE_FRONT_LEFT:
+        frontLeft.set(speed);
+      case RobotMap.DRIVE_FRONT_RIGHT:
+        frontRight.set(speed);
+      case RobotMap.DRIVE_BACK_LEFT:
+        backLeft.set(speed);
+      case RobotMap.DRIVE_BACK_RIGHT:
+        backRight.set(speed);
+    }
+  }
+
   public void stop() {
     tankDrive(0.0, 0.0);
   }
