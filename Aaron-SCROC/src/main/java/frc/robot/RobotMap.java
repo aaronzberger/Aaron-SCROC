@@ -13,21 +13,21 @@ package frc.robot;
 public class RobotMap {
     //CAN IDs
 	public static final int AZ_FRONT_LEFT = 1;
-	public static final int AZ_FRONT_RIGHT = 2;
-	public static final int AZ_BACK_LEFT = 3;
-    public static final int AZ_BACK_RIGHT = 4;
+	public static final int AZ_FRONT_RIGHT = 8;
+	public static final int AZ_BACK_LEFT = 4;
+    public static final int AZ_BACK_RIGHT = 5;
     
-    public static final int DRIVE_FRONT_LEFT = 5;
-	public static final int DRIVE_FRONT_RIGHT = 6;
-	public static final int DRIVE_BACK_LEFT = 7;
-    public static final int DRIVE_BACK_RIGHT = 8;
+    public static final int DRIVE_FRONT_LEFT = 2;
+	public static final int DRIVE_FRONT_RIGHT = 7;
+	public static final int DRIVE_BACK_LEFT = 3;
+    public static final int DRIVE_BACK_RIGHT = 6;
 
 	public static final double THROTTLE_SCALE = 0.75;
 	public static final double STEERING_SCALE = 0.6;
 	public static final double MAX_SPEEDS = 0.95;
 
-	public static final double TEST_AZ_SPEED = 0.5;
-	public static final double TEST_DRIVE_SPEED = 0.5;
+	public static final double TEST_AZ_SPEED = 0.15;
+	public static final double TEST_DRIVE_SPEED = 0.15;
 
 	//Logitech f310 Mappings
 	/* axis mappings */

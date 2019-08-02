@@ -40,6 +40,12 @@ public class DriveTrain extends Subsystem {
     rightMotors = new SpeedControllerGroup(frontRight, backRight);
 
     differentialDrive = new DifferentialDrive(leftMotors, rightMotors);
+
+    frontLeft.setInverted(true);
+    frontRight.setInverted(true);
+    backLeft.setInverted(true);
+    backRight.setInverted(true);
+
   }
   
   public void arcadeDrive(double speed, double rotation) {
