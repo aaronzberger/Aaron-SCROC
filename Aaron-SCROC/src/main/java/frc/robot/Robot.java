@@ -40,7 +40,8 @@ public class Robot extends TimedRobot {
   public static AZIMUTH azimuth = new AZIMUTH();
   public static Joystick joystick = new Joystick(0);
   public static OI oi = new OI();
-  private static boolean azimuthOffsetSetup = false;
+  private static boolean isAzimuthOffsetSetup = false;
+
   // private static final String kDefaultAuto = "Default";
   // private static final String kCustomAuto = "My Auto";
   // private String m_autoSelected;
@@ -55,6 +56,7 @@ public class Robot extends TimedRobot {
     TeleopDrive teleopDrive = new TeleopDrive();
     driveTrain.setDefaultCommand(teleopDrive);
 
+    //Put commands to the Smart Dashboard for controlling each swerve motor (forward and backward)
     SmartDashboard.putData("Back Left Swerve Forward", new BackLeftSwerveForward());
     SmartDashboard.putData("Back Left Swerve Backward", new BackLeftSwerveBackward());
     SmartDashboard.putData("Back Right Swerve Forward", new BackRightSwerveForward());
@@ -64,6 +66,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Front Right Swerve Forward", new FrontRightSwerveForward());
     SmartDashboard.putData("Front Right Swerve Backward", new FrontRightSwerveBackward());
 
+    //Put commands to the Smart Dashboard for controlling each drive motor (forward and backward)
     SmartDashboard.putData("Back Left Drive Forward", new BackLeftDriveForward());
     SmartDashboard.putData("Back Left Drive Backward", new BackLeftDriveBackward());
     SmartDashboard.putData("Back Right Drive Forward", new BackRightDriveForward());
@@ -103,9 +106,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    if(!azimuthOffsetSetup) {
+    if(!isAzimuthOffsetSetup) {
       Robot.azimuth.setupOffsets();
-      azimuthOffsetSetup = true;
+      isAzimuthOffsetSetup = true;
     }
     // m_autoSelected = m_chooser.getSelected();
     // // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
@@ -131,9 +134,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    if(!azimuthOffsetSetup) {
+    if(!isAzimuthOffsetSetup) {
       Robot.azimuth.setupOffsets();
-      azimuthOffsetSetup = true;
+      isAzimuthOffsetSetup = true;
     }
   }
 

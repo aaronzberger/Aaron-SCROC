@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.command.Command;
 public class SwitchToArcadeMode extends Command {
   public SwitchToArcadeMode() {
     // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
     requires(Robot.azimuth);
   }
 

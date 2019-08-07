@@ -20,15 +20,13 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 public class DriveTrain extends Subsystem {
   private CANSparkMax frontLeft;
   private CANSparkMax frontRight;
-  private CANSparkMax backRight;
   private CANSparkMax backLeft;
+  private CANSparkMax backRight;
 
   private SpeedControllerGroup leftMotors;
   private SpeedControllerGroup rightMotors;
 
   private DifferentialDrive differentialDrive;
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
 
   public DriveTrain() {
     frontLeft = new CANSparkMax(RobotMap.DRIVE_FRONT_LEFT, MotorType.kBrushless);
@@ -45,7 +43,6 @@ public class DriveTrain extends Subsystem {
     frontRight.setInverted(true);
     backLeft.setInverted(true);
     backRight.setInverted(true);
-
   }
   
   public void arcadeDrive(double speed, double rotation) {

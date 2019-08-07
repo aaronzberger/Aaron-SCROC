@@ -24,7 +24,6 @@ public class TeleopDrive extends Command {
     requires(azimuth);
     requires(driveTrain);
     // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
   }
 
   // Called just before this Command runs the first time
@@ -37,20 +36,20 @@ public class TeleopDrive extends Command {
   @Override
   protected void execute() {
     if(swerveMode) {
-      //FOR AZIMUTH DRIVING (talons, left stick)
+      //for azimuth translation driving
       double xValue = joystick.getRawAxis(RobotMap.kLeftStickX);
       double yValue = joystick.getRawAxis(RobotMap.kLeftStickY);
       double degreeValue = convertXYtoDegree(xValue, yValue);
       if(xValue != 0.0 && yValue != 0.0) {
         azimuth.setWheelsToDegree(degreeValue);
-        arcadeDrive(RobotMap.THROTTLE_SCALE, 0.0);
+        arcadeDrive(RobotMap.DRIVE_THROTTLE_SCALE, 0.0);
         System.out.println("Set all wheels to " + degreeValue);
       }
     }
     else {
-    //FOR SIMPLE DRIVING (neos)
-    double speed = RobotMap.THROTTLE_SCALE;
-    double rotation = RobotMap.STEERING_SCALE;
+    //for tank driving
+    double speed = RobotMap.DRIVE_THROTTLE_SCALE;
+    double rotation = RobotMap.DRIVE_STEERING_SCALE;
 
     speed *= joystick.getRawAxis(RobotMap.kRightStickY);
     rotation *= joystick.getRawAxis(RobotMap.kRightStickX);
@@ -59,8 +58,8 @@ public class TeleopDrive extends Command {
     // speed *= Math.pow(joystick.getRawAxis(RobotMap.kRightStickY), 3);
     // rotation *= Math.pow(joystick.getRawAxis(RobotMap.kRightStickX), 3);
 
-    if(speed > RobotMap.MAX_SPEEDS) { speed = RobotMap.MAX_SPEEDS; }
-    if(rotation > RobotMap.MAX_SPEEDS) { rotation = RobotMap.MAX_SPEEDS; }
+    if(speed > RobotMap.DRIVE_MAX_SPEED) { speed = RobotMap.DRIVE_MAX_SPEED; }
+    if(rotation > RobotMap.DRIVE_MAX_SPEED) { rotation = RobotMap.DRIVE_MAX_SPEED; }
 
     arcadeDrive(speed, rotation);
     }
@@ -87,8 +86,7 @@ public class TeleopDrive extends Command {
     }
     return returnValue;
   }
-    //should never run because it checks to make sure they are both not zero. (atan is only zero @ x=0)  }
-
+  
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {

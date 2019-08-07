@@ -12,12 +12,13 @@ import edu.wpi.first.wpilibj.command.Command;
 public class SwitchToSwerveMode extends Command {
   public SwitchToSwerveMode() {
     // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+    requires(Robot.azimuth);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.azimuth.setWheelsToDegree(0);
   }
 
   // Called repeatedly when this Command is scheduled to run

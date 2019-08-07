@@ -13,7 +13,9 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.command.WaitCommand;
 
 /**
  * Add your docs here.
@@ -75,24 +77,29 @@ public class AZIMUTH extends Subsystem {
     talon.config_kF(0, 0);
     talon.setInverted(true);
     talon.setNeutralMode(NeutralMode.Brake);
-    System.out.println(" in setupTalon");
+    System.out.println("in setupTalon method");
   }
 
   private void setupOffset(TalonSRX talon) {
-    // switch(talon.getDeviceID()) {
-    //   case RobotMap.AZ_FRONT_LEFT:
-    //     frontLeft.set(ControlMode.Position, RobotMap.AZ_FRONT_LEFT_OFFSET);
-    //   case RobotMap.AZ_FRONT_RIGHT:
-    //     frontRight.set(ControlMode.Position, RobotMap.AZ_FRONT_RIGHT_OFFSET);
-    //   case RobotMap.AZ_BACK_LEFT:
-    //     backLeft.set(ControlMode.Position, RobotMap.AZ_BACK_LEFT_OFFSET);
-    //   case RobotMap.AZ_BACK_RIGHT:
-    //     backRight.set(ControlMode.Position, RobotMap.AZ_BACK_RIGHT_OFFSET);
-    // }
-    // System.out.println("before timer delay in setupOffset");
-    // Timer.delay(1000);
-    // System.out.println("after timer delay in setupOffset");
-    // talon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+    switch(talon.getDeviceID()) {
+      case RobotMap.AZ_FRONT_LEFT:
+        frontLeft.set(ControlMode.Position, RobotMap.AZ_FRONT_LEFT_OFFSET);
+      case RobotMap.AZ_FRONT_RIGHT:
+        frontRight.set(ControlMode.Position, RobotMap.AZ_FRONT_RIGHT_OFFSET);
+      case RobotMap.AZ_BACK_LEFT:
+        backLeft.set(ControlMode.Position, RobotMap.AZ_BACK_LEFT_OFFSET);
+      case RobotMap.AZ_BACK_RIGHT:
+        backRight.set(ControlMode.Position, RobotMap.AZ_BACK_RIGHT_OFFSET);
+    }
+    System.out.println("before timer delay in setupOffset");
+    /**
+     * method needs to pause to let the motor reach the zero position before setting the current encoder value to 0.
+     * We could use:
+     * Timer.delay(5)
+     * Scheduler.getInstance().add(new WaitCommand(10));
+     */
+    System.out.println("after timer delay in setupOffset");
+    talon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
     talon.setSelectedSensorPosition(0);
   }
 
@@ -111,7 +118,6 @@ public class AZIMUTH extends Subsystem {
 
   @Override
   public void initDefaultCommand() {
-
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
   }
