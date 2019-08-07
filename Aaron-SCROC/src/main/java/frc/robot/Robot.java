@@ -39,6 +39,8 @@ public class Robot extends TimedRobot {
   public static DriveTrain driveTrain = new DriveTrain();
   public static AZIMUTH azimuth = new AZIMUTH();
   public static Joystick joystick = new Joystick(0);
+  public static OI oi = new OI();
+  private static boolean azimuthOffsetSetup = false;
   // private static final String kDefaultAuto = "Default";
   // private static final String kCustomAuto = "My Auto";
   // private String m_autoSelected;
@@ -101,6 +103,10 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
+    if(!azimuthOffsetSetup) {
+      Robot.azimuth.setupOffsets();
+      azimuthOffsetSetup = true;
+    }
     // m_autoSelected = m_chooser.getSelected();
     // // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
     // System.out.println("Auto selected: " + m_autoSelected);
@@ -121,6 +127,14 @@ public class Robot extends TimedRobot {
     //     // Put default auto code here
     //     break;
     // }
+  }
+
+  @Override
+  public void teleopInit() {
+    if(!azimuthOffsetSetup) {
+      Robot.azimuth.setupOffsets();
+      azimuthOffsetSetup = true;
+    }
   }
 
   /**

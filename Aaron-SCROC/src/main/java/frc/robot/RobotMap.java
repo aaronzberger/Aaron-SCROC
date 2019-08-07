@@ -22,6 +22,12 @@ public class RobotMap {
 	public static final int DRIVE_BACK_LEFT = 3;
     public static final int DRIVE_BACK_RIGHT = 6;
 
+	public static final int AZ_FRONT_LEFT_OFFSET = 1272;
+	public static final int AZ_FRONT_RIGHT_OFFSET = 1241;
+	public static final int AZ_BACK_LEFT_OFFSET = -997;
+	public static final int AZ_BACK_RIGHT_OFFSET = 30;
+
+
 	public static final double THROTTLE_SCALE = 0.75;
 	public static final double STEERING_SCALE = 0.6;
 	public static final double MAX_SPEEDS = 0.95;

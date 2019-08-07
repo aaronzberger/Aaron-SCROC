@@ -9,8 +9,10 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -19,7 +21,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class AZIMUTH extends Subsystem {
 
   private TalonSRX frontLeft = new TalonSRX(RobotMap.AZ_FRONT_LEFT);
-  private TalonSRX frontRight = new TalonSRX(RobotMap.AZ_BACK_RIGHT);
+  private TalonSRX frontRight = new TalonSRX(RobotMap.AZ_FRONT_RIGHT);
   private TalonSRX backLeft = new TalonSRX(RobotMap.AZ_BACK_LEFT);
   private TalonSRX backRight = new TalonSRX(RobotMap.AZ_BACK_RIGHT);
 
@@ -28,6 +30,13 @@ public class AZIMUTH extends Subsystem {
     setupTalon(frontRight);
     setupTalon(backLeft);
     setupTalon(backRight);
+  }
+
+  public void setupOffsets() {
+    setupOffset(frontLeft);
+    setupOffset(frontRight);
+    setupOffset(backLeft);
+    setupOffset(backRight);
   }
 
   public void setWheelsToDegree(double goal) {
@@ -59,14 +68,32 @@ public class AZIMUTH extends Subsystem {
 
   private void setupTalon(TalonSRX talon) {
     talon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
-    talon.setSensorPhase(true);
-    talon.config_kP(0, 1);
+    talon.setSensorPhase(false);
+    talon.config_kP(0, 3);
     talon.config_kI(0, 0);
-    talon.config_kD(0, 6);
+    talon.config_kD(0, 30);
     talon.config_kF(0, 0);
     talon.setInverted(true);
-    talon.set(ControlMode.Position, 0);
-    talon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+    talon.setNeutralMode(NeutralMode.Brake);
+    System.out.println(" in setupTalon");
+  }
+
+  private void setupOffset(TalonSRX talon) {
+    // switch(talon.getDeviceID()) {
+    //   case RobotMap.AZ_FRONT_LEFT:
+    //     frontLeft.set(ControlMode.Position, RobotMap.AZ_FRONT_LEFT_OFFSET);
+    //   case RobotMap.AZ_FRONT_RIGHT:
+    //     frontRight.set(ControlMode.Position, RobotMap.AZ_FRONT_RIGHT_OFFSET);
+    //   case RobotMap.AZ_BACK_LEFT:
+    //     backLeft.set(ControlMode.Position, RobotMap.AZ_BACK_LEFT_OFFSET);
+    //   case RobotMap.AZ_BACK_RIGHT:
+    //     backRight.set(ControlMode.Position, RobotMap.AZ_BACK_RIGHT_OFFSET);
+    // }
+    // System.out.println("before timer delay in setupOffset");
+    // Timer.delay(1000);
+    // System.out.println("after timer delay in setupOffset");
+    // talon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+    talon.setSelectedSensorPosition(0);
   }
 
   public void setSpeed(int CANID, double speed) {

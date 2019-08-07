@@ -18,11 +18,11 @@ public class TeleopDrive extends Command {
   public static boolean swerveMode = true;
 
   public TeleopDrive() {
-    requires(azimuth);
-    requires(driveTrain);
     this.driveTrain = Robot.driveTrain;
     this.azimuth = Robot.azimuth;
     this.joystick = Robot.joystick;
+    requires(azimuth);
+    requires(driveTrain);
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
