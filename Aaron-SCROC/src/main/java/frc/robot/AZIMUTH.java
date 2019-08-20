@@ -81,16 +81,28 @@ public class AZIMUTH extends Subsystem {
   }
 
   private void setupOffset(TalonSRX talon) {
+    int currentEncoderValue = talon.getSelectedSensorPosition();
+    int currentActualPosition = -1;
     switch(talon.getDeviceID()) {
       case RobotMap.AZ_FRONT_LEFT:
-        frontLeft.set(ControlMode.Position, RobotMap.AZ_FRONT_LEFT_OFFSET);
+        currentActualPosition = currentEncoderValue + RobotMap.AZ_FRONT_LEFT_OFFSET;
       case RobotMap.AZ_FRONT_RIGHT:
-        frontRight.set(ControlMode.Position, RobotMap.AZ_FRONT_RIGHT_OFFSET);
+        currentActualPosition = currentEncoderValue + RobotMap.AZ_FRONT_RIGHT_OFFSET;
       case RobotMap.AZ_BACK_LEFT:
-        backLeft.set(ControlMode.Position, RobotMap.AZ_BACK_LEFT_OFFSET);
+        currentActualPosition = currentEncoderValue + RobotMap.AZ_BACK_LEFT_OFFSET;
       case RobotMap.AZ_BACK_RIGHT:
-        backRight.set(ControlMode.Position, RobotMap.AZ_BACK_RIGHT_OFFSET);
+        currentActualPosition = currentEncoderValue + RobotMap.AZ_BACK_RIGHT_OFFSET;
     }
+    if(currentActualPosition < 0) {
+      currentActualPosition += 4096;
+    }
+    if(currentActualPosition > 4095) {
+      currentActualPosition -= 4096;
+    }
+    talon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+    talon.setSelectedSensorPosition(currentActualPosition);
+    talon.set(ControlMode.Position, 0);
+
     System.out.println("before timer delay in setupOffset");
     /**
      * method needs to pause to let the motor reach the zero position before setting the current encoder value to 0.
@@ -98,9 +110,9 @@ public class AZIMUTH extends Subsystem {
      * Timer.delay(5)
      * Scheduler.getInstance().add(new WaitCommand(10));
      */
-    System.out.println("after timer delay in setupOffset");
-    talon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
-    talon.setSelectedSensorPosition(0);
+    // System.out.println("after timer delay in setupOffset");
+    // talon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+    // talon.setSelectedSensorPosition(0);
   }
 
   public void setSpeed(int CANID, double speed) {
