@@ -36,15 +36,16 @@ import frc.robot.TestSwerveCommands.FrontRightSwerveForward;
  * project.
  */
 public class Robot extends TimedRobot {
-  public static DriveTrain driveTrain = new DriveTrain();
-  public static AZIMUTH azimuth = new AZIMUTH();
-  public static Joystick joystick = new Joystick(0);
-  public static OI oi = new OI();
-  private static boolean isAzimuthOffsetSetup = false;
+  public static DriveTrain driveTrain;
+  public static AZIMUTH azimuth;
+  public static Joystick joystick;
+  public static OI oi;
+  private static boolean isAzimuthOffsetSetup;
 
   // private static final String kDefaultAuto = "Default";
   // private static final String kCustomAuto = "My Auto";
   // private String m_autoSelected;
+
   // private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
   /**
@@ -53,9 +54,11 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    TeleopDrive teleopDrive = new TeleopDrive();
-    driveTrain.setDefaultCommand(teleopDrive);
-
+    driveTrain = new DriveTrain();
+    azimuth = new AZIMUTH();
+    joystick = new Joystick(0);
+    oi = new OI();
+    isAzimuthOffsetSetup = false;
     //Put commands to the Smart Dashboard for controlling each swerve motor (forward and backward)
     SmartDashboard.putData("Back Left Swerve Forward", new BackLeftSwerveForward());
     SmartDashboard.putData("Back Left Swerve Backward", new BackLeftSwerveBackward());
@@ -134,10 +137,10 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    if(!isAzimuthOffsetSetup) {
-      Robot.azimuth.setupOffsets();
-      isAzimuthOffsetSetup = true;
-    }
+  //   if(!isAzimuthOffsetSetup) {
+  //     Robot.azimuth.setupOffsets();
+  //     isAzimuthOffsetSetup = true;
+  //   }
   }
 
   /**

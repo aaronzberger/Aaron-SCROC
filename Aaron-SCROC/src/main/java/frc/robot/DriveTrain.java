@@ -10,6 +10,7 @@ package frc.robot;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.MotorSafety;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -43,6 +44,8 @@ public class DriveTrain extends Subsystem {
     frontRight.setInverted(true);
     backLeft.setInverted(true);
     backRight.setInverted(true);
+
+    differentialDrive.setSafetyEnabled(false);
   }
   
   public void arcadeDrive(double speed, double rotation) {
@@ -57,12 +60,16 @@ public class DriveTrain extends Subsystem {
     switch(CANID) {
       case RobotMap.DRIVE_FRONT_LEFT:
         frontLeft.set(speed);
+        break;
       case RobotMap.DRIVE_FRONT_RIGHT:
         frontRight.set(speed);
+        break;
       case RobotMap.DRIVE_BACK_LEFT:
         backLeft.set(speed);
+        break;
       case RobotMap.DRIVE_BACK_RIGHT:
         backRight.set(speed);
+        break;
     }
   }
 
@@ -74,5 +81,6 @@ public class DriveTrain extends Subsystem {
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
+    //setDefaultCommand(new TeleopDrive());
   }
 }

@@ -33,10 +33,10 @@ public class RobotMap {
 	 * ROBOT CONSTANTS
 	 */
 	//offsets for each azimuth wheel (absolute positions where all wheels are pointed forward)
-	public static final int AZ_FRONT_LEFT_OFFSET = 1272;
-	public static final int AZ_FRONT_RIGHT_OFFSET = 1241;
-	public static final int AZ_BACK_LEFT_OFFSET = -997;
-	public static final int AZ_BACK_RIGHT_OFFSET = 30;
+	public static final int AZ_FRONT_LEFT_OFFSET = 1500;
+	public static final int AZ_FRONT_RIGHT_OFFSET = 1500;
+	public static final int AZ_BACK_LEFT_OFFSET = 1500;
+	public static final int AZ_BACK_RIGHT_OFFSET = 1500;
 
 	//motor speeds
 	public static final double DRIVE_THROTTLE_SCALE = 0.75;
