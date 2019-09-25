@@ -15,10 +15,5 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  */
 public class OI {
     public OI() {
-        Button rightStickButton = new JoystickButton(Robot.joystick, RobotMap.kButtonRightStick);
-        rightStickButton.whenPressed(new SwitchToArcadeMode());
-        
-        Button leftStickButton = new JoystickButton(Robot.joystick, RobotMap.kButtonLeftStick);
-        leftStickButton.whenPressed(new SwitchToSwerveMode());
     }
 }

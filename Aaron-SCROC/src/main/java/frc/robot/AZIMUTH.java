@@ -22,30 +22,30 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
  */
 public class AZIMUTH extends Subsystem {
 
-  private TalonSRX frontLeft = new TalonSRX(RobotMap.AZ_FRONT_LEFT);
-  private TalonSRX frontRight = new TalonSRX(RobotMap.AZ_FRONT_RIGHT);
-  private TalonSRX backLeft = new TalonSRX(RobotMap.AZ_BACK_LEFT);
-  private TalonSRX backRight = new TalonSRX(RobotMap.AZ_BACK_RIGHT);
+  // private TalonSRX frontLeft = new TalonSRX(RobotMap.AZ_FRONT_LEFT);
+  // private TalonSRX frontRight = new TalonSRX(RobotMap.AZ_FRONT_RIGHT);
+  // private TalonSRX backLeft = new TalonSRX(RobotMap.AZ_BACK_LEFT);
+  //private TalonSRX backRight = new TalonSRX(RobotMap.AZ_BACK_RIGHT);
 
   public AZIMUTH() {
-    setupTalon(frontLeft);
-    setupTalon(frontRight);
-    setupTalon(backLeft);
-    setupTalon(backRight);
+    // setupTalon(frontLeft);
+    // setupTalon(frontRight);
+    // setupTalon(backLeft);
+    //setupTalon(backRight);
   }
 
   public void setupOffsets() {
-    setupOffset(frontLeft);
-    setupOffset(frontRight);
-    setupOffset(backLeft);
-    setupOffset(backRight);
+    // setupOffset(frontLeft);
+    // setupOffset(frontRight);
+    // setupOffset(backLeft);
+    //setupOffset(backRight);
   }
 
   public void setWheelsToDegree(double goal) {
-    setWheelToDegree(frontLeft, goal);
-    setWheelToDegree(frontRight, goal);
-    setWheelToDegree(backLeft, goal);
-    setWheelToDegree(backRight, goal);
+    // setWheelToDegree(frontLeft, goal);
+    // setWheelToDegree(frontRight, goal);
+    // setWheelToDegree(backLeft, goal);
+    //setWheelToDegree(backRight, goal);
   }
 
   private void setWheelToDegree(TalonSRX motor, double goalPosition) {
@@ -58,7 +58,7 @@ public class AZIMUTH extends Subsystem {
     if(goalMove > 180) {
       goalMove -= 360;
     }
-    motor.set(ControlMode.Position, convertDegreesToTicks(goalMove) + currentRelativePosition);
+    motor.set(ControlMode.Position, convertDegreesToTicks(goalMove) + convertDegreesToTicks(currentRelativePosition));
   }
 
   private double convertDegreesToTicks(double degreeValue) {
@@ -70,12 +70,12 @@ public class AZIMUTH extends Subsystem {
 
   private void setupTalon(TalonSRX talon) {
     talon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0 , 10);
-    talon.setSensorPhase(true);
+    talon.setSensorPhase(false);
     talon.config_kP(0, 3);
     talon.config_kI(0, 0);
     talon.config_kD(0, 30);
     talon.config_kF(0, 0);
-    talon.setInverted(false);
+    talon.setInverted(true);
     talon.setNeutralMode(NeutralMode.Brake);
     System.out.println("in setupTalon method");
   }
@@ -127,16 +127,16 @@ public class AZIMUTH extends Subsystem {
   public void setSpeed(int CANID, double speed) {
     switch(CANID) {
       case RobotMap.AZ_FRONT_LEFT:
-        frontLeft.set(ControlMode.PercentOutput, speed);
+        // frontLeft.set(ControlMode.PercentOutput, speed);
         break;
       case RobotMap.AZ_FRONT_RIGHT:
-        frontRight.set(ControlMode.PercentOutput, speed);
+        // frontRight.set(ControlMode.PercentOutput, speed);
         break;
       case RobotMap.AZ_BACK_LEFT:
-        backLeft.set(ControlMode.PercentOutput, speed);
+        // backLeft.set(ControlMode.PercentOutput, speed);
         break;
       case RobotMap.AZ_BACK_RIGHT:
-        backRight.set(ControlMode.PercentOutput, speed);
+        //backRight.set(ControlMode.PercentOutput, speed);
         break;
     }
   }

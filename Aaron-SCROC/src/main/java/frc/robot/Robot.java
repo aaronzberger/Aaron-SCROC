@@ -137,10 +137,10 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-  //   if(!isAzimuthOffsetSetup) {
-  //     Robot.azimuth.setupOffsets();
-  //     isAzimuthOffsetSetup = true;
-  //   }
+     if(!isAzimuthOffsetSetup) {
+       Robot.azimuth.setupOffsets();
+       isAzimuthOffsetSetup = true;
+     }
   }
 
   /**

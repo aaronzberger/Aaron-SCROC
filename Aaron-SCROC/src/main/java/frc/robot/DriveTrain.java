@@ -41,9 +41,9 @@ public class DriveTrain extends Subsystem {
     differentialDrive = new DifferentialDrive(leftMotors, rightMotors);
 
     frontLeft.setInverted(true);
-    frontRight.setInverted(true);
+    frontRight.setInverted(false);
     backLeft.setInverted(true);
-    backRight.setInverted(true);
+    backRight.setInverted(false);
 
     differentialDrive.setSafetyEnabled(false);
   }
@@ -81,6 +81,6 @@ public class DriveTrain extends Subsystem {
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
-    //setDefaultCommand(new TeleopDrive());
+    setDefaultCommand(new TeleopDrive());
   }
 }
