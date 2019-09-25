@@ -35,6 +35,8 @@ public class TeleopDrive extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    double speed = RobotMap.DRIVE_THROTTLE_SCALE;
+    double rotation = RobotMap.DRIVE_STEERING_SCALE;
     if(swerveMode) {
       //for azimuth translation driving
       double xValue = joystick.getRawAxis(RobotMap.kLeftStickX);
@@ -45,12 +47,16 @@ public class TeleopDrive extends Command {
         //arcadeDrive(RobotMap.DRIVE_THROTTLE_SCALE, 0.0);
         System.out.println("Set all wheels to " + degreeValue);
       }
+
+      speed *= joystick.getRawAxis(RobotMap.kRightStickY);
+      rotation *= joystick.getRawAxis(RobotMap.kRightStickX);
+      if(speed > RobotMap.DRIVE_MAX_SPEED) { speed = RobotMap.DRIVE_MAX_SPEED; }
+      if(rotation > RobotMap.DRIVE_MAX_SPEED) { rotation = RobotMap.DRIVE_MAX_SPEED; }
+
+      arcadeDrive(speed, rotation);
     }
     else {
     //for tank driving
-    double speed = RobotMap.DRIVE_THROTTLE_SCALE;
-    double rotation = RobotMap.DRIVE_STEERING_SCALE;
-
     speed *= joystick.getRawAxis(RobotMap.kRightStickY);
     rotation *= joystick.getRawAxis(RobotMap.kRightStickX);
 
