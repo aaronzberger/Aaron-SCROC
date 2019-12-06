@@ -10,7 +10,6 @@ package frc.robot;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.MotorSafety;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -40,6 +39,7 @@ public class DriveTrain extends Subsystem {
 
     differentialDrive = new DifferentialDrive(leftMotors, rightMotors);
 
+    //These may need to be adjusted depending on your specific motors. Test individually before testing as a whole.
     frontLeft.setInverted(true);
     frontRight.setInverted(false);
     backLeft.setInverted(true);
@@ -56,6 +56,7 @@ public class DriveTrain extends Subsystem {
     differentialDrive.tankDrive(leftSpeed, rightSpeed);
   }
 
+  //We do not use speed control on a normal basis. For testing and for test commands, speed is sufficient (as supposed to position PID control).
   public void setSpeed(int CANID, double speed) {
     switch(CANID) {
       case RobotMap.DRIVE_FRONT_LEFT:

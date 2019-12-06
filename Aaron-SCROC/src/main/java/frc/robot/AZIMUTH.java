@@ -12,16 +12,12 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.command.WaitCommand;
 
 /**
  * Add your docs here.
  */
 public class AZIMUTH extends Subsystem {
-
   private TalonSRX frontLeft = new TalonSRX(RobotMap.AZ_FRONT_LEFT);
   private TalonSRX frontRight = new TalonSRX(RobotMap.AZ_FRONT_RIGHT);
   private TalonSRX backLeft = new TalonSRX(RobotMap.AZ_BACK_LEFT);
@@ -48,6 +44,12 @@ public class AZIMUTH extends Subsystem {
     setWheelToDegree(backRight, goal);
   }
 
+  /*
+  * Since we want the wheels to be able to continuously move around, we must use relative positions
+  * rather than absolute, or else moving from 359 deg to 1 deg would move the motor backwards instead of the shortest path.
+  * This function decides how far and in what direction to move the wheels based on previous and goal position.
+  */
+
   private void setWheelToDegree(TalonSRX motor, double goalPosition) {
     double currentRelativePosition = convertTicksToDegrees(motor.getSelectedSensorPosition());
     double currentAbsolutePosition = ((currentRelativePosition % 360.0) + 360.0) % 360.0;
@@ -69,7 +71,6 @@ public class AZIMUTH extends Subsystem {
   }
 
   private void setupTalon(TalonSRX talon) {
-    talon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0 , 10);
     talon.setSensorPhase(false);
     talon.config_kP(0, 3);
     talon.config_kI(0, 0);
@@ -81,7 +82,7 @@ public class AZIMUTH extends Subsystem {
   }
 
   private void setupOffset(TalonSRX talon) {
-    //talon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0 , 10);
+    talon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0 , 10);
     int currentEncoderValue = talon.getSelectedSensorPosition();
     int currentActualPosition = -10;
     switch(talon.getDeviceID()) {
@@ -111,17 +112,6 @@ public class AZIMUTH extends Subsystem {
     talon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0 , 10);
     talon.setSelectedSensorPosition(currentActualPosition);
     talon.set(ControlMode.Position, 0);
-
-    //System.out.println("before timer delay in setupOffset");
-    /**
-     * method needs to pause to let the motor reach the zero position before setting the current encoder value to 0.
-     * We could use:
-     * Timer.delay(5)
-     * Scheduler.getInstance().add(new WaitCommand(10));
-     */
-    // System.out.println("after timer delay in setupOffset");
-    // talon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
-    // talon.setSelectedSensorPosition(0);
   }
 
   public void setSpeed(int CANID, double speed) {

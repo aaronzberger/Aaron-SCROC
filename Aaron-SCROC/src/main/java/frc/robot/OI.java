@@ -7,13 +7,14 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.buttons.Button;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
-
 /**
  * Add your docs here.
  */
 public class OI {
     public OI() {
+        /*
+        * An Operator Interface (OI) is not needed for just a driveTrain.
+        * If you add any other subsystems that rely on an OI, use this class.
+        */
     }
 }

@@ -59,7 +59,8 @@ public class Robot extends TimedRobot {
     joystick = new Joystick(0);
     oi = new OI();
     isAzimuthOffsetSetup = false;
-    //Put commands to the Smart Dashboard for controlling each swerve motor (forward and backward)
+
+    //Put commands to the Smart Dashboard for controlling each swerve motor (forward and backward) using the TestSwerveCommands
     SmartDashboard.putData("Back Left Swerve Forward", new BackLeftSwerveForward());
     SmartDashboard.putData("Back Left Swerve Backward", new BackLeftSwerveBackward());
     SmartDashboard.putData("Back Right Swerve Forward", new BackRightSwerveForward());
@@ -69,7 +70,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Front Right Swerve Forward", new FrontRightSwerveForward());
     SmartDashboard.putData("Front Right Swerve Backward", new FrontRightSwerveBackward());
 
-    //Put commands to the Smart Dashboard for controlling each drive motor (forward and backward)
+    //Put commands to the Smart Dashboard for controlling each drive motor (forward and backward) using the TestDriveCommands
     SmartDashboard.putData("Back Left Drive Forward", new BackLeftDriveForward());
     SmartDashboard.putData("Back Left Drive Backward", new BackLeftDriveBackward());
     SmartDashboard.putData("Back Right Drive Forward", new BackRightDriveForward());
@@ -109,6 +110,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
+  //Sets up the Azimuth motors if they have not already been set up
     if(!isAzimuthOffsetSetup) {
       Robot.azimuth.setupOffsets();
       isAzimuthOffsetSetup = true;
@@ -137,6 +139,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    //Sets up the Azimuth motors if they have not already been set up
      if(!isAzimuthOffsetSetup) {
        Robot.azimuth.setupOffsets();
        isAzimuthOffsetSetup = true;

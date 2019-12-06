@@ -35,28 +35,35 @@ public class TeleopDrive extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    /* 
+    *  The driving is split up between swerve mode and normal arcade drive
+    *  In swerve mode, when the driver pushes the left stick to any angle, the azimuth motors turn to that angle and drive forward
+    *  In normal mode, the driverrain operates as a normal arcade drive
+    *  One can switch between the modes using buttons A(swerve) and B(normal)
+    */
     double speed = RobotMap.DRIVE_THROTTLE_SCALE;
     double rotation = RobotMap.DRIVE_STEERING_SCALE;
     if(swerveMode) {
-      //for azimuth translation driving
+      //For swerve mode driving
       double xValue = joystick.getRawAxis(RobotMap.kLeftStickX);
       double yValue = joystick.getRawAxis(RobotMap.kLeftStickY);
       double degreeValue = convertXYtoDegree(xValue, yValue);
       if(xValue < -0.1 || xValue > 0.1 || yValue < -0.1 || yValue > 0.1) {
         azimuth.setWheelsToDegree(degreeValue);
-        //arcadeDrive(RobotMap.DRIVE_THROTTLE_SCALE, 0.0);
         System.out.println("Set all wheels to " + degreeValue);
+        arcadeDrive(RobotMap.DRIVE_THROTTLE_SCALE, 0.0);
       }
 
       speed *= joystick.getRawAxis(RobotMap.kRightStickY);
       rotation *= joystick.getRawAxis(RobotMap.kRightStickX);
+
       if(speed > RobotMap.DRIVE_MAX_SPEED) { speed = RobotMap.DRIVE_MAX_SPEED; }
       if(rotation > RobotMap.DRIVE_MAX_SPEED) { rotation = RobotMap.DRIVE_MAX_SPEED; }
 
       arcadeDrive(speed, rotation);
     }
     else {
-    //for tank driving
+    //For normal arcade driving
     speed *= joystick.getRawAxis(RobotMap.kRightStickY);
     rotation *= joystick.getRawAxis(RobotMap.kRightStickX);
 
@@ -69,7 +76,6 @@ public class TeleopDrive extends Command {
 
     arcadeDrive(speed, rotation);
     }
-    //System.out.println(swerveMode);
     if(Robot.joystick.getRawButton(RobotMap.kButtonA)) {
       swerveMode = false;
     }
@@ -78,11 +84,15 @@ public class TeleopDrive extends Command {
     }
   }
 
-  //to ensure there is only one reference to arcadeDrive at one time.
+  //To ensure there is only one reference to arcadeDrive at a time:
   private static void arcadeDrive(double speed, double rotation) {
     Robot.driveTrain.arcadeDrive(speed, rotation);
   }
 
+    /* 
+    *  The joystick outputs an X and Y value. We need an angle value, however, so we can point our azimuth motors to the correct position
+    *  This function converts an X and Y value to a degree value using inverse tangeant and a addition, depending on the quadrant (1-4)
+    */
   private double convertXYtoDegree(double xValue, double yValue) {
     double returnValue = 0;
     if(xValue >= 0 && yValue >= 0) {
