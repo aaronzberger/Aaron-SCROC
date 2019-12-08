@@ -51,7 +51,7 @@ public class TeleopDrive extends Command {
       if(xValue < -0.1 || xValue > 0.1 || yValue < -0.1 || yValue > 0.1) {
         azimuth.setWheelsToDegree(degreeValue);
         System.out.println("Set all wheels to " + degreeValue);
-        arcadeDrive(RobotMap.DRIVE_THROTTLE_SCALE, 0.0);
+        //arcadeDrive(RobotMap.DRIVE_THROTTLE_SCALE, 0.0);
       }
 
       speed *= joystick.getRawAxis(RobotMap.kRightStickY);
