@@ -88,18 +88,22 @@ public class AZIMUTH extends Subsystem {
     switch(talon.getDeviceID()) {
       case RobotMap.AZ_FRONT_LEFT:
         currentActualPosition = currentEncoderValue + RobotMap.AZ_FRONT_LEFT_OFFSET;
+        //currentActualPosition = (((currentEncoderValue + (360 - RobotMap.AZ_FRONT_LEFT_OFFSET)) % 360) + 360) % 360;
         System.out.println("front left (AA) actual pos: " + currentActualPosition + "\nfront left encoder val: " + currentEncoderValue);
         break;
       case RobotMap.AZ_FRONT_RIGHT:
         currentActualPosition = currentEncoderValue + RobotMap.AZ_FRONT_RIGHT_OFFSET;
+        //currentActualPosition = (((currentEncoderValue + (360 - RobotMap.AZ_FRONT_RIGHT_OFFSET)) % 360) + 360) % 360;
         System.out.println("front right (DA) actual pos: " + currentActualPosition + "\nfront right encoder val: " + currentEncoderValue);
         break;
       case RobotMap.AZ_BACK_LEFT:
         currentActualPosition = currentEncoderValue + RobotMap.AZ_BACK_LEFT_OFFSET;
+        //currentActualPosition = (((currentEncoderValue + (360 - RobotMap.AZ_BACK_LEFT_OFFSET)) % 360) + 360) % 360;
         System.out.println("back left (BA) actual pos: " + currentActualPosition + "\nback left encoder val: " + currentEncoderValue);
         break;
       case RobotMap.AZ_BACK_RIGHT:
         currentActualPosition = currentEncoderValue + RobotMap.AZ_BACK_RIGHT_OFFSET;
+        //currentActualPosition = (((currentEncoderValue + (360 - RobotMap.AZ_BACK_RIGHT_OFFSET)) % 360) + 360) % 360;
         System.out.println("back right (CA) actual pos: " + currentActualPosition + "\nback right encoder val: " + currentEncoderValue);
         break;
     }
